@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ArticleObject } from 'src/app/articles/interfaces/articleObject';
 import { Article } from 'src/app/articles/interfaces/article';
 import { ImageService } from './image.service';
-import { forkJoin, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

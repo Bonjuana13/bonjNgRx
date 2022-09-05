@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DefaultDataServiceConfig, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Article } from "src/app/articles/interfaces/article";
 
 @Injectable()

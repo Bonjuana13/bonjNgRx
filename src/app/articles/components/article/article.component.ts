@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Article } from '../../interfaces/article';
 import { ArticleEntityService } from 'src/app/core/services/article-entity.service';
 import { StorageEntityService } from 'src/app/core/services/storage-entity.service';

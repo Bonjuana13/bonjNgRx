@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { filter, first, map, Observable, tap } from "rxjs";
+import { filter, first, Observable, tap } from "rxjs";
 import { ArticleEntityService } from "../services/article-entity.service";
 
 @Injectable()

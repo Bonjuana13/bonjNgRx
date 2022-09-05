@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StorageFile } from 'src/app/articles/interfaces/storageFile';
 import { StorageService } from './storage.service';
 
 @Injectable({
