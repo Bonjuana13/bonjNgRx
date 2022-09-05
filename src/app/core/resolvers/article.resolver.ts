@@ -1,21 +1,24 @@
-// import { Injectable } from '@angular/core';
-// import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-// import { ArticleService } from '../services/article.service';
-// import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
+import { filter, first, map, Observable, tap } from "rxjs";
+import { ArticleEntityService } from "../services/article-entity.service";
 
-// import { Article } from 'src/app/articles/interfaces/article';
+@Injectable()
+export class ArticleResolver implements Resolve<boolean>{
 
-// @Injectable({ providedIn: 'root' })
-// export class ArticleResolver implements Resolve<Article> {
-//   constructor(
-//     private articleService: ArticleService,
-//     private router: Router,
-//   ) {}
+    constructor(private articlesEntityService: ArticleEntityService) {}
 
-//   resolve(
-//     route: ActivatedRouteSnapshot,
-//   ): Observable<Article> | Promise<Article> | Article {
-//     this.router.navigate(['/404']);
-//     return of();
-//   }
-// }
+    resolve(route: ActivatedRouteSnapshot,
+            state: RouterStateSnapshot): Observable<boolean> {
+                return this.articlesEntityService.loaded$
+                .pipe(
+                    tap(loaded => {
+                        if (!loaded) {
+                            this.articlesEntityService.getAll()
+                        }
+                    }),
+                    filter(loaded => !!loaded),
+                    first()
+                );
+    }
+}

@@ -1,47 +1,44 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, finalize, map, switchMap, take, tap } from 'rxjs/operators';
+import { DefaultDataService, EntityCollectionServiceElementsFactory, HttpUrlGenerator } from '@ngrx/data';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ArticleObject } from 'src/app/articles/interfaces/articleObject';
 import { Article } from 'src/app/articles/interfaces/article';
 import { ImageService } from './image.service';
-import { Page } from 'src/app/articles/interfaces/page';
+import { forkJoin, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ArticleService extends EntityCollectionServiceBase<Article> {
+export class ArticleService extends DefaultDataService<Article> {
 
   constructor(
-    private http: HttpClient,
+    http: HttpClient,
+    httpUrlGenerator: HttpUrlGenerator,
     private imageService: ImageService,
-    serviceElementsFactory: EntityCollectionServiceElementsFactory,
+    private serviceElementsFactory: EntityCollectionServiceElementsFactory,
   ) {
-    super('Articles', serviceElementsFactory);
+    super('Article', http, httpUrlGenerator);
   }
 
-  getAllArticles() {
-    this.setLoading(true);
+  override getAll(): Observable<Article[]> {
     return this.http.get<ArticleObject>(`${environment.apiUrl}articles/list`)
       .pipe(
         catchError((error) => {
           throw new Error(error);
         }),
-        finalize(() => {
-          this.setLoading(false);
-          this.setLoaded(true);
-        }),
         tap(({applicationsView}) => {
+          console.log('test');
+          // const test = this.imageService.loadImagesForArticles(applicationsView).subscribe();
           this.imageService.loadImagesForArticles(applicationsView).subscribe();
-          this.addManyToCache(applicationsView);
+          // forkJoin([
+          //   of(applicationsView),
+          //   of(test)
+          // ])
         }),
-        map(({ applicationsView, pageViewModel }) => {
-          return {
-            applicationsView: applicationsView,
-            pageViewModel: pageViewModel,
-          };
+        map(({applicationsView}) => {
+          return applicationsView;
         }),
       );
   }

@@ -4,13 +4,12 @@ import { environment } from 'src/environments/environment';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import { Image } from 'src/app/articles/interfaces/image';
 import { StorageFile } from 'src/app/articles/interfaces/storageFile';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StorageService extends EntityCollectionServiceBase<Image> {
+export class StorageService extends EntityCollectionServiceBase<StorageFile> {
   constructor(
     private http: HttpClient,
     serviceElementsFactory: EntityCollectionServiceElementsFactory,

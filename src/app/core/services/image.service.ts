@@ -1,8 +1,7 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { Image } from 'src/app/articles/interfaces/image';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { StorageFile } from 'src/app/articles/interfaces/storageFile';
 import { StorageService } from './storage.service';
 
 @Injectable({
