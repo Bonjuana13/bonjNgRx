@@ -9,6 +9,8 @@ import { ArticleEntityService } from '../core/services/article-entity.service';
 import { StorageService } from '../core/services/storage.service';
 import { ImageService } from '../core/services/image.service';
 import { ArticleResolver } from '../core/resolvers/article.resolver';
+import { StorageEntityService } from '../core/services/storage-entity.service';
+
 @NgModule({
   imports: [
     SharedModule,
@@ -27,7 +29,8 @@ import { ArticleResolver } from '../core/resolvers/article.resolver';
     ArticleEntityService,
     StorageService,
     ImageService,
-    ArticleResolver
+    ArticleResolver,
+    StorageEntityService
   ],
 })
 
