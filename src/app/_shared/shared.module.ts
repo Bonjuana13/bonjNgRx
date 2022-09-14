@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 
 @NgModule({
@@ -13,6 +13,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
   ],
   providers: [
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [],
 })
 export class SharedModule { }

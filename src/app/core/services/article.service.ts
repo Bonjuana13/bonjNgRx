@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { DefaultDataService, EntityCollectionServiceElementsFactory, HttpUrlGenerator } from '@ngrx/data';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ArticleObject } from 'src/app/articles/interfaces/articleObject';
 import { Article } from 'src/app/articles/interfaces/article';
 import { ImageService } from './image.service';
 import { Observable } from 'rxjs';
+import { StorageEntityService } from './storage-entity.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class ArticleService extends DefaultDataService<Article> {
   constructor(
     http: HttpClient,
     httpUrlGenerator: HttpUrlGenerator,
+    private storageService: StorageEntityService,
     private imageService: ImageService,
     private serviceElementsFactory: EntityCollectionServiceElementsFactory,
   ) {
@@ -29,17 +31,9 @@ export class ArticleService extends DefaultDataService<Article> {
           throw new Error(error);
         }),
         tap(({applicationsView}) => {
-          console.log('test');
-          // const test = this.imageService.loadImagesForArticles(applicationsView).subscribe();
           this.imageService.loadImagesForArticles(applicationsView).subscribe();
-          // forkJoin([
-          //   of(applicationsView),
-          //   of(test)
-          // ])
         }),
-        map(({applicationsView}) => {
-          return applicationsView;
-        }),
+        map(({applicationsView}) => applicationsView)
       );
   }
 

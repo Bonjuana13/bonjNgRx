@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StorageService } from './storage.service';
+import { Article } from 'src/app/articles/interfaces/article';
+import { StorageEntityService } from './storage-entity.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,16 +10,19 @@ import { StorageService } from './storage.service';
 export class ImageService {
 
   constructor(
-    private storageService: StorageService,
+    private storageService: StorageEntityService,
   ) { }
 
-  loadImagesForArticles(entities: { id: string }[]) {
-    return this.storageService.getImages(entities)
-      .pipe(
-        map(images => {
-          return images;
-        }),
-      );
+  loadImagesForArticles(entities: Article[]) {
+    if (!entities) return of([]);
+    if (entities.length === 0) return of([]);
+
+    const ids: Array<string> = [];
+    entities.forEach(item => {
+      if (item.previewImage)
+        ids.push(item.previewImage);
+    });
+    return this.storageService.getByKeys(ids);
   }
 
 }
